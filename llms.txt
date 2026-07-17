@@ -1,0 +1,27 @@
+# amiPassAI
+> AI Password Security & Digital Identity Companion — dual-engine verified
+
+## What is amiPassAI?
+amiPassAI is a dual-engine AI companion for password security, authentication, and digital identity protection. Two AI models (Grok + DeepSeek) cross-verify every response — security advice you can trust.
+
+## Features
+- Password strength analysis and passphrase strategy guidance
+- MFA/2FA setup guidance (TOTP, hardware keys, passkeys/FIDO2)
+- Breach awareness and credential rotation planning
+- Social engineering and phishing detection education
+- Enterprise security basics (NIST, zero-trust, password policies)
+- Privacy tools guidance (VPN, encrypted messaging, browser hardening)
+
+## Architecture
+- Dual-engine: Grok 4.5 (xAI) + DeepSeek
+- Anti-confabulation: trigram-cosine concordance >= 0.45 required
+- Stateless: queries processed in real-time, never stored
+
+## Compliance
+- EU AI Act (Reg. 2024/1689) Art. 50 — limited-risk, full transparency
+- GDPR (Reg. 2016/679) — minimal data, no query storage
+
+## Links
+- Website: https://amipassai.com
+- API: https://amipassai-api-production.up.railway.app
+- Contact: hello@amipassai.com
