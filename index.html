@@ -85,20 +85,26 @@ footer a{color:var(--accent)}
 .modal p,.modal li{font-size:.85rem;color:var(--text2);line-height:1.6;margin-bottom:.5rem}
 .modal ul{padding-left:1.2rem}
 .modal-close{position:absolute;top:1rem;right:1rem;background:none;border:none;color:var(--text);font-size:1.3rem;cursor:pointer}
+
+.lang-toggle{display:flex;gap:.3rem;justify-content:center;margin-top:.8rem}
+.lang-toggle button{background:var(--surface);border:1px solid var(--border);color:var(--text2);padding:.25rem .7rem;border-radius:6px;cursor:pointer;font-size:.78rem;font-weight:600;transition:all .2s}
+.lang-toggle button.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+[data-i18n]{transition:opacity .15s}
 </style>
 </head>
 <body>
 
 <div class="hero">
   <h1><span class="icon">🔐</span> amiPassAI</h1>
-  <p class="tagline">AI Password Security & Digital Identity Companion — dual-engine verified</p>
-  <div class="badge"><span class="dot"></span> Grok + DeepSeek dual-engine</div>
+  <p class="tagline" data-i18n="tagline">AI Password Security & Digital Identity Companion — dual-engine verified</p>
+  <div class="badge"><span class="dot"></span> Grok + DeepSeek dual-engine
+  <div class="lang-toggle"><button onclick="switchLang('en')" id="langEn" class="active">EN</button><button onclick="switchLang('ro')" id="langRo">RO</button></div>
 </div>
 
 <div class="cards">
-  <div class="card"><div class="ci">🛡️</div><h3>Password Strength</h3><p>Analyze password strategies, entropy, and learn what makes credentials truly secure</p></div>
-  <div class="card"><div class="ci">🔑</div><h3>MFA & Passkeys</h3><p>Set up 2FA, hardware keys, FIDO2 passkeys — understand every authentication layer</p></div>
-  <div class="card"><div class="ci">🚨</div><h3>Breach Response</h3><p>Check exposure, plan credential rotation, and protect your accounts after a breach</p></div>
+  <div class="card"><div class="ci">🛡️</div><h3 data-i18n="card1_h">Password Strength</h3><p>Analyze password strategies, entropy, and learn what makes credentials truly secure</p></div>
+  <div class="card"><div class="ci">🔑</div><h3 data-i18n="card2_h">MFA & Passkeys</h3><p>Set up 2FA, hardware keys, FIDO2 passkeys — understand every authentication layer</p></div>
+  <div class="card"><div class="ci">🚨</div><h3 data-i18n="card3_h">Breach Response</h3><p>Check exposure, plan credential rotation, and protect your accounts after a breach</p></div>
 </div>
 
 <div class="demo-preview">
@@ -114,24 +120,24 @@ footer a{color:var(--accent)}
 </div>
 
 <div class="chat-section">
-  <h2>Ask about password security</h2>
+  <h2 data-i18n="chat_h2">Ask about password security</h2>
   <div class="chat-box">
     <div id="messages">
       <div class="msg system">🔐 amiPassAI — dual-engine verified security advice. 5 free questions/day.<br><em>Never share your actual passwords here or anywhere.</em></div>
     </div>
     <div class="input-row">
-      <textarea id="userInput" rows="1" maxlength="2000" placeholder="e.g. How do I set up a hardware security key?"></textarea>
-      <button id="sendBtn" onclick="sendMessage()">Send</button>
+      <textarea id="userInput" rows="1" maxlength="2000" placeholder="e.g. How do I set up a hardware security key?" data-i18n="placeholder"></textarea>
+      <button id="sendBtn" onclick="sendMessage()" data-i18n="send">Send</button>
     </div>
   </div>
   <p class="free-note">Free: 5 questions/day &nbsp;|&nbsp; <strong>Pro:</strong> unlimited</p>
-  <div class="upgrade-row"><button class="upgrade-btn" onclick="upgrade()">🔐 Upgrade to Pro — €9.99/mo</button></div>
+  <div class="upgrade-row"><button class="upgrade-btn" onclick="upgrade()"><span data-i18n="upgrade">🔐 Upgrade to Pro — €9.99/mo</span></button></div>
 </div>
 
 <div class="features">
-  <h2>What amiPassAI can help with</h2>
+  <h2 data-i18n="feat_h2">What amiPassAI can help with</h2>
   <div class="feat-grid">
-    <div class="feat"><h3>🔐 Password Strategy</h3><p>Strength analysis, passphrase techniques, entropy explained, password manager guidance</p></div>
+    <div class="feat"><h3></h3><p>Strength analysis, passphrase techniques, entropy explained, password manager guidance</p></div>
     <div class="feat"><h3>🔑 Authentication</h3><p>MFA/2FA setup, TOTP apps, hardware keys, passkeys/FIDO2, SSO concepts</p></div>
     <div class="feat"><h3>🚨 Breach Awareness</h3><p>Exposure checks, credential rotation plans, dark web basics, incident response</p></div>
     <div class="feat"><h3>🕵️ Social Engineering</h3><p>Phishing detection, SIM-swap prevention, pretexting awareness, safe browsing</p></div>
@@ -141,7 +147,7 @@ footer a{color:var(--accent)}
 </div>
 
 <div class="compliance">
-  <p>Regulation-aware AI</p>
+  <p data-i18n="compliance_p">Regulation-aware AI</p>
   <div class="compliance-badges">
     <span class="cbadge" onclick="showModal('euai')">🇪🇺 EU AI Act</span>
     <span class="cbadge" onclick="showModal('gdpr')">🛡️ GDPR</span>
@@ -211,6 +217,29 @@ terms:`<h2>📄 Terms of Service</h2><p><strong>amiPassAI</strong> — last upda
 };
 function showModal(k){document.getElementById('modalContent').innerHTML=modals[k]||'';document.getElementById('modalOverlay').classList.add('active')}
 function closeModal(){document.getElementById('modalOverlay').classList.remove('active')}
+
+
+// i18n
+const T = {"tagline": {"en": "AI Password Security & Digital Identity Companion — dual-engine verified", "ro": "Companion AI Securitate Parole & Identitate Digitală — verificat cu motor dual"}, "card1_h": {"en": "Password Strength", "ro": "Puterea Parolei"}, "card1_p": {"en": "Analyze password strategies, entropy, and learn what makes credentials truly secure", "ro": "Analizează strategii de parole, entropie și ce face credențialele cu adevărat sigure"}, "card2_h": {"en": "MFA & Passkeys", "ro": "MFA & Passkey-uri"}, "card2_p": {"en": "Set up 2FA, hardware keys, FIDO2 passkeys — understand every authentication layer", "ro": "Configurează 2FA, chei hardware, passkey-uri FIDO2 — înțelege fiecare nivel de autentificare"}, "card3_h": {"en": "Breach Response", "ro": "Răspuns la Breșe"}, "card3_p": {"en": "Check exposure, plan credential rotation, and protect your accounts after a breach", "ro": "Verifică expunerea, planifică rotația credențialelor și protejează-ți conturile după o breșă"}, "chat_h2": {"en": "Ask about password security", "ro": "Întreabă despre securitatea parolelor"}, "sys_msg": {"en": "amiPassAI — dual-engine verified security advice. 5 free questions/day.", "ro": "amiPassAI — sfaturi de securitate verificate dual-engine. 5 întrebări gratuite/zi."}, "placeholder": {"en": "e.g. How do I set up a hardware security key?", "ro": "ex. Cum configurez o cheie de securitate hardware?"}, "send": {"en": "Send", "ro": "Trimite"}, "free_note": {"en": "Free: 5 questions/day", "ro": "Gratuit: 5 întrebări/zi"}, "pro": {"en": "Pro:", "ro": "Pro:"}, "unlimited": {"en": "unlimited", "ro": "nelimitat"}, "upgrade": {"en": "Upgrade to Pro — €9.99/mo", "ro": "Upgrade la Pro — €9.99/lună"}, "feat_h2": {"en": "What amiPassAI can help with", "ro": "Cum te poate ajuta amiPassAI"}, "compliance_p": {"en": "Regulation-aware AI", "ro": "AI conform cu legislația"}, "footer_disc": {"en": "amiPassAI is an AI security education tool — not a substitute for professional cybersecurity services.", "ro": "amiPassAI este un instrument educativ AI de securitate — nu înlocuiește serviciile profesionale de cybersecurity."}};
+let currentLang = localStorage.getItem('amipassai_lang') || 'en';
+
+function switchLang(lang) {
+  currentLang = lang;
+  localStorage.setItem('amipassai_lang', lang);
+  document.getElementById('langEn').classList.toggle('active', lang === 'en');
+  document.getElementById('langRo').classList.toggle('active', lang === 'ro');
+  document.documentElement.lang = lang === 'ro' ? 'ro' : 'en';
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.dataset.i18n;
+    if (T[key] && T[key][lang]) {
+      if (el.tagName === 'TEXTAREA' || el.tagName === 'INPUT') el.placeholder = T[key][lang];
+      else el.textContent = T[key][lang];
+    }
+  });
+}
+
+// Apply saved language on load
+document.addEventListener('DOMContentLoaded', () => { if (currentLang !== 'en') switchLang(currentLang); });
 </script>
 </body>
 </html>
