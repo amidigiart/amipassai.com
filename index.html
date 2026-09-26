@@ -245,5 +245,30 @@ function switchLang(lang) {
 // Apply saved language on load
 document.addEventListener('DOMContentLoaded', () => { if (currentLang !== 'en') switchLang(currentLang); });
 </script>
+<!-- ami-prototype-notice: prototip, platile nu sunt active -->
+<script>
+(function () {
+  var ro = /^ro/i.test(document.documentElement.lang || '') || /^ro/i.test(navigator.language || '');
+  var t = ro
+    ? { bar: 'Prototip funcțional · planul Pro nu e încă disponibil, plățile nu sunt active', btn: 'Pro — în curând', msg: 'Planul Pro nu e încă disponibil. Aplicația e un prototip funcțional; varianta gratuită rămâne activă.' }
+    : { bar: 'Working prototype · Pro is not available yet, payments are not active', btn: 'Pro — coming soon', msg: 'Pro is not available yet. This app is a working prototype; the free version stays active.' };
+  // platile raman oprite: butoanele Pro nu mai deschid Stripe
+  window.handleProPurchase = window.upgrade = function () { alert(t.msg); };
+  function mark() {
+    document.querySelectorAll('[onclick*="handleProPurchase"],[onclick*="upgrade()"]').forEach(function (b) {
+      b.removeAttribute('data-i18n'); b.textContent = t.btn;
+    });
+    if (document.getElementById('ami-proto-bar')) return;
+    var bar = document.createElement('div');
+    bar.id = 'ami-proto-bar'; bar.setAttribute('role', 'note'); bar.textContent = t.bar;
+    bar.style.cssText = 'position:fixed;left:0;right:0;bottom:0;z-index:2147483000;padding:7px 16px;background:#1c1917;color:#fcd34d;font:600 13px/1.4 system-ui,sans-serif;text-align:center;border-top:1px solid #f59e0b';
+    document.body.appendChild(bar);
+    document.body.style.paddingBottom = (bar.offsetHeight + 4) + 'px';
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', mark); else mark();
+  // i18n-ul paginii rescrie textele la schimbarea limbii: reaplica eticheta
+  document.addEventListener('click', function () { setTimeout(mark, 50); }, true);
+})();
+</script>
 </body>
 </html>
